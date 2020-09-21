@@ -8,17 +8,23 @@
 Feature: メニューバーテスト（ヘルプ）
     メニューバーのヘルプ項目の選択および表示テスト
 
-Scenario Outline: HelpSelectTest
-  Given メニューバーの<MenuItemName1>をクリック
-  When メニューアイテムの<MenuItemName2>をクリック
-  When ウィンドウのタイトルが<TitleName>と一致するかを確認
-  Then ボタン<ButtonName>をクリック
+    Background:
+      Given メニューバーが有効になるまで待つ
+      And "WebView"のタブをクリック
+      And WebViewのURL欄が有効になるまで待つ
 
-  Examples:
-    | MenuItemName1 | MenuItemName2                | TitleName        | ButtonName            |
-    | "ヘルプ"      | "バージョン情報"             | "バージョン情報" | "VersionInfoOkButton" |
-    | "ヘルプ"      | "使用許諾契約書"             | "使用許諾契約書" | "ContractDocOkButton" |
-    | "ヘルプ"      | "ドキュメントフォルダを開く" | "エラー"         | "OkButton"            |
+    Scenario Outline: HelpSelectTest
+      When メニューバーの<MenuItemName1>をクリック
+      When メニューアイテムの<MenuItemName2>をクリック
+      Then タイトルが<TitleName>のウィンドウがある事を確認
+      When ボタン<ButtonName>をクリック
+      Then タイトルが<TitleName>のウィンドウがない事を確認
+
+      Examples:
+        | MenuItemName1 | MenuItemName2                | TitleName        | ButtonName            |
+        | "ヘルプ"      | "バージョン情報"             | "バージョン情報" | "VersionInfoOkButton" |
+        | "ヘルプ"      | "使用許諾契約書"             | "使用許諾契約書" | "ContractDocOkButton" |
+        | "ヘルプ"      | "ドキュメントフォルダを開く" | "エラー"         | "OkButton"            |
 
 ```
 
